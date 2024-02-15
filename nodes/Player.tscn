@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://mmis6hf7q7ww"]
+
+[ext_resource type="Script" path="res://scripts/PlayerController.cs" id="1_18vn2"]
+[ext_resource type="PackedScene" uid="uid://b6ogjd7ri41h0" path="res://models/camera.glb" id="2_0jnsp"]
+[ext_resource type="Script" path="res://scripts/CameraLightSource.cs" id="3_1q2of"]
+[ext_resource type="AudioStream" uid="uid://o6k1br60rust" path="res://sounds/camera_shutter_and_flash.mp3" id="4_2itwq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pjey3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eqr0k"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_lightSource", "_camera", "_equippedPivot")]
+script = ExtResource("1_18vn2")
+_lightSource = NodePath("Camera3D/Equipped/Camera")
+_camera = NodePath("Camera3D")
+_equippedPivot = NodePath("Camera3D/Equipped")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_pjey3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_eqr0k")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65156, 0)
+fov = 70.0
+
+[node name="Equipped" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.654357, -0.65156, -0.715301)
+
+[node name="Camera" parent="Camera3D/Equipped" node_paths=PackedStringArray("_light", "_audio") instance=ExtResource("2_0jnsp")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("3_1q2of")
+_light = NodePath("Flash2")
+_audio = NodePath("ShutterSFX")
+
+[node name="Flash2" type="SpotLight3D" parent="Camera3D/Equipped/Camera"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.153272, 0.786454, 0)
+light_energy = 0.0
+light_size = 1.0
+spot_range = 10.4921
+spot_angle = 70.0
+
+[node name="ShutterSFX" type="AudioStreamPlayer" parent="Camera3D/Equipped/Camera"]
+stream = ExtResource("4_2itwq")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.15156, 0)
+light_energy = 0.05
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]

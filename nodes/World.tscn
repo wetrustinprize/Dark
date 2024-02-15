@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7slmwsaceh8k"]
+
+[ext_resource type="PackedScene" uid="uid://mmis6hf7q7ww" path="res://nodes/Player.tscn" id="1_8crmv"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_h8g6c"]
+
+[sub_resource type="Environment" id="Environment_3nqns"]
+background_mode = 1
+
+[node name="World" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_8crmv")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 4.17583, 1.31368, -4.30359)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(24.5283, 0, 0, 0, -1.07216e-06, 24.5283, 0, -24.5283, -1.07216e-06, 0, 0, 0)
+use_collision = true
+mesh = SubResource("QuadMesh_h8g6c")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3nqns")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(24.5283, 0, 0, 0, -1.07216e-06, 24.5283, 0, -24.5283, -1.07216e-06, 0, 0, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.447693, 0.227783)
+size = Vector3(1, 0.104614, 0.544434)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 0.404589, 0.227991, 0.227783)
+size = Vector3(1, 0.104614, 0.544434)
