@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b6ogjd7ri41h0"
-path="res://.godot/imported/camera.glb-005caf9ad60d35897aa78332eebfa5dd.scn"
+uid="uid://dwynbh11d4155"
+path="res://.godot/imported/lighter.glb-40ce149ea5e7ee3dbdb37557b142fa4c.scn"
 
 [deps]
 
-source_file="res://models/camera.glb"
-dest_files=["res://.godot/imported/camera.glb-005caf9ad60d35897aa78332eebfa5dd.scn"]
+source_file="res://models/lighter/lighter.glb"
+dest_files=["res://.godot/imported/lighter.glb-40ce149ea5e7ee3dbdb37557b142fa4c.scn"]
 
 [params]
 

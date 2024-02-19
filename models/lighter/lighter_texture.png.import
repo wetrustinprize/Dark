@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfpcd5gmmq2bf"
-path.s3tc="res://.godot/imported/camera_texture.png-f5b21982ac85357fa7c1ba9b536f3afd.s3tc.ctex"
+uid="uid://8c6aite8o6t6"
+path.s3tc="res://.godot/imported/lighter_texture.png-3350fdf3245ed51eaf55d654120de887.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://models/camera_texture.png"
-dest_files=["res://.godot/imported/camera_texture.png-f5b21982ac85357fa7c1ba9b536f3afd.s3tc.ctex"]
+source_file="res://models/lighter/lighter_texture.png"
+dest_files=["res://.godot/imported/lighter_texture.png-3350fdf3245ed51eaf55d654120de887.s3tc.ctex"]
 
 [params]
 

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://rw6vfdt8hf08"]
+
+[ext_resource type="PackedScene" uid="uid://dwynbh11d4155" path="res://models/lighter/lighter.glb" id="1_fady7"]
+
+[node name="lighter" instance=ExtResource("1_fady7")]

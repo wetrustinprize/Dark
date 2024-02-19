@@ -62,11 +62,16 @@ public partial class PlayerController : CharacterBody3D
 
 	void CalculateRotation(InputEventMouseMotion @event)
 	{
+		Vector2 lookRotationVector = new(
+			-@event.Relative.X * _lookSpeed,
+			-@event.Relative.Y * _lookSpeed
+		);
+
 		// Rotate the player's body.
-		RotateY(-@event.Relative.X * _lookSpeed);
+		RotateY(lookRotationVector.X);
 
 		// Rotate the camera.
-		_camera.RotateX(-@event.Relative.Y * _lookSpeed);
+		_camera.RotateX(lookRotationVector.Y);
 		_camera.RotationDegrees = new Vector3(
 			Mathf.Clamp(_camera.RotationDegrees.X, -_cameraClamp, _cameraClamp),
 			_camera.RotationDegrees.Y,
@@ -81,6 +86,9 @@ public partial class PlayerController : CharacterBody3D
 			Mathf.Clamp(_equippedPivot.RotationDegrees.Y, -_equippedPivotClamp, _equippedPivotClamp),
 			0
 		);
+
+		// Send to the light source
+		_lightSource.OnRotate(lookRotationVector);
 	}
 
 	void SmoothReturnEquippedPivot(double delta)
@@ -118,5 +126,7 @@ public partial class PlayerController : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+
+		_lightSource.OnMove(new Vector3(inputDir.X, 0, inputDir.Y));
 	}
 }

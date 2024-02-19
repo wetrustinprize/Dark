@@ -21,7 +21,6 @@ public partial class CameraLightSource : PlayerLightSource
 
 	public override void OnEquip()
 	{
-		throw new NotImplementedException();
 	}
 
 	public override void OnTrigger()

@@ -1,19 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://mmis6hf7q7ww"]
+[gd_scene load_steps=13 format=3 uid="uid://mmis6hf7q7ww"]
 
 [ext_resource type="Script" path="res://scripts/PlayerController.cs" id="1_18vn2"]
-[ext_resource type="PackedScene" uid="uid://b6ogjd7ri41h0" path="res://models/camera.glb" id="2_0jnsp"]
 [ext_resource type="Script" path="res://scripts/CameraLightSource.cs" id="3_1q2of"]
 [ext_resource type="AudioStream" uid="uid://o6k1br60rust" path="res://sounds/camera_shutter_and_flash.mp3" id="4_2itwq"]
+[ext_resource type="PackedScene" uid="uid://pqkw3d2hu3ps" path="res://models/camera/camera.tscn" id="5_dlkqi"]
+[ext_resource type="PackedScene" uid="uid://rw6vfdt8hf08" path="res://models/lighter/lighter.tscn" id="5_llu7q"]
+[ext_resource type="Script" path="res://scripts/LighterLightSource.cs" id="6_g5msj"]
+[ext_resource type="Shader" uid="uid://bxeiuv5fthcad" path="res://shaders/Flame.tres" id="7_fmfj1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pjey3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_eqr0k"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_lightSource", "_camera", "_equippedPivot")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_bal11"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_touwq"]
+size = Vector2(0.215, 0.38)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcp6h"]
+render_priority = 0
+shader = ExtResource("7_fmfj1")
+shader_parameter/movement = Vector3(0, 0, 0)
+shader_parameter/brightness = 1.0
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_equippedPivot")]
 script = ExtResource("1_18vn2")
-_lightSource = NodePath("Camera3D/Equipped/Camera")
-_camera = NodePath("Camera3D")
-_equippedPivot = NodePath("Camera3D/Equipped")
+_camera = NodePath("FirstPersonCamera")
+_equippedPivot = NodePath("FirstPersonCamera/SpringArm3D/Equipped")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_pjey3")
@@ -21,31 +34,59 @@ shape = SubResource("CapsuleShape3D_pjey3")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_eqr0k")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="FirstPersonCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65156, 0)
-fov = 70.0
+current = true
+fov = 60.0
 
-[node name="Equipped" type="Node3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.654357, -0.65156, -0.715301)
+[node name="SpringArm3D" type="SpringArm3D" parent="FirstPersonCamera"]
+transform = Transform3D(-0.825675, 0, 0.564146, 0, 1, 0, -0.564146, 0, -0.825675, 0, -0.696766, 0)
+shape = SubResource("SphereShape3D_bal11")
+spring_length = 1.175
+margin = 0.2
 
-[node name="Camera" parent="Camera3D/Equipped" node_paths=PackedStringArray("_light", "_audio") instance=ExtResource("2_0jnsp")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+[node name="Equipped" type="Node3D" parent="FirstPersonCamera/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.715)
+
+[node name="Lighter" parent="FirstPersonCamera/SpringArm3D/Equipped" node_paths=PackedStringArray("_meshInstance", "_light") instance=ExtResource("5_llu7q")]
+transform = Transform3D(-0.291754, 0, -0.956493, 0, 1, 0, 0.956493, 0, -0.291754, 0.12695, -0.164133, 0.038723)
+script = ExtResource("6_g5msj")
+_meshInstance = NodePath("Flame Mesh")
+_light = NodePath("Flame")
+
+[node name="Flame" type="OmniLight3D" parent="FirstPersonCamera/SpringArm3D/Equipped/Lighter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.688783, 0)
+layers = 3
+light_color = Color(1, 1, 0.537255, 1)
+light_energy = 0.2
+
+[node name="Flame Mesh" type="MeshInstance3D" parent="FirstPersonCamera/SpringArm3D/Equipped/Lighter"]
+transform = Transform3D(-2.98023e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -2.98023e-08, -8.88178e-16, -1.19209e-07, 0.775707, 2.98023e-08)
+mesh = SubResource("PlaneMesh_touwq")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_dcp6h")
+
+[node name="Camera" parent="FirstPersonCamera/SpringArm3D/Equipped" node_paths=PackedStringArray("_light", "_audio") instance=ExtResource("5_dlkqi")]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -8.9407e-08, 0, -5.96046e-08)
+visible = false
 script = ExtResource("3_1q2of")
-_light = NodePath("Flash2")
+_light = NodePath("CameraFlash")
 _audio = NodePath("ShutterSFX")
 
-[node name="Flash2" type="SpotLight3D" parent="Camera3D/Equipped/Camera"]
+[node name="CameraFlash" type="SpotLight3D" parent="FirstPersonCamera/SpringArm3D/Equipped/Camera"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.153272, 0.786454, 0)
+layers = 3
 light_energy = 0.0
 light_size = 1.0
 spot_range = 10.4921
 spot_angle = 70.0
 
-[node name="ShutterSFX" type="AudioStreamPlayer" parent="Camera3D/Equipped/Camera"]
+[node name="ShutterSFX" type="AudioStreamPlayer" parent="FirstPersonCamera/SpringArm3D/Equipped/Camera"]
 stream = ExtResource("4_2itwq")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D"]
+[node name="OmniLight3D" type="OmniLight3D" parent="FirstPersonCamera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.15156, 0)
+layers = 3
 light_energy = 0.05
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
