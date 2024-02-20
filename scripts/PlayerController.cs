@@ -11,6 +11,7 @@ public partial class PlayerController : CharacterBody3D
 	#region Rotation
 
 	[Export] private Camera3D _camera;
+	[Export] private Camera3D _equippedCamera;
 	[Export] private Node3D _equippedPivot;
 
 	private const float _lookSpeed = 0.005f;
@@ -42,6 +43,8 @@ public partial class PlayerController : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		SmoothReturnEquippedPivot(delta);
+
+		_equippedCamera.GlobalTransform = _camera.GlobalTransform;
 	}
 
 	public override void _PhysicsProcess(double delta)
