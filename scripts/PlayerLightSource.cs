@@ -2,6 +2,7 @@ using Godot;
 
 namespace Dark.Player;
 
+[GlobalClass]
 public abstract partial class PlayerLightSource : Node
 {
 	public abstract void OnEquip();

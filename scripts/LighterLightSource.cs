@@ -7,7 +7,7 @@ public partial class LighterLightSource : PlayerLightSource
 {
     #region Variables
 
-    [Export] private MeshInstance3D _meshInstance;
+    [Export] private MeshInstance3D _flameMesh;
     [Export] private OmniLight3D _light;
 
     #region Light Flicker
@@ -37,7 +37,7 @@ public partial class LighterLightSource : PlayerLightSource
 
     public override void _Ready()
     {
-        _material = (ShaderMaterial)_meshInstance.GetSurfaceOverrideMaterial(0);
+        _material = (ShaderMaterial)_flameMesh.GetSurfaceOverrideMaterial(0);
     }
 
     public override void _Process(double delta)
