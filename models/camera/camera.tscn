@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://pqkw3d2hu3ps"]
-
-[ext_resource type="PackedScene" uid="uid://b6ogjd7ri41h0" path="res://models/camera/camera.glb" id="1_jjwwt"]
-
-[node name="camera" instance=ExtResource("1_jjwwt")]

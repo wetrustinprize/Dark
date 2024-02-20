@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl6i5b4t3e2qw"]
+
+[ext_resource type="Script" path="res://scripts/LighterLightSource.cs" id="1_2o86u"]
+[ext_resource type="PackedScene" uid="uid://dwynbh11d4155" path="res://models/lighter/lighter.glb" id="1_moncx"]
+[ext_resource type="Shader" uid="uid://bxeiuv5fthcad" path="res://shaders/Flame.tres" id="2_jqgpx"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gcfv0"]
+size = Vector2(0.19, 0.315)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p5yrp"]
+render_priority = 0
+shader = ExtResource("2_jqgpx")
+shader_parameter/movement = Vector3(0, 0, 0)
+shader_parameter/brightness = 1.0
+
+[node name="LighterSource" type="Node3D" node_paths=PackedStringArray("_flameMesh", "_light")]
+script = ExtResource("1_2o86u")
+_flameMesh = NodePath("Model/Flame")
+_light = NodePath("Model/Light")
+
+[node name="Model" parent="." instance=ExtResource("1_moncx")]
+
+[node name="Cube" parent="Model" index="0"]
+layers = 2
+
+[node name="Cube_001" parent="Model" index="1"]
+layers = 2
+
+[node name="Cylinder" parent="Model" index="2"]
+layers = 2
+
+[node name="Cylinder_001" parent="Model" index="3"]
+layers = 2
+
+[node name="Flame" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 0, -1, 1, -4.37114e-08, -4.37114e-08, 9.92617e-23, 0.75461, 3.2985e-08)
+layers = 2
+mesh = SubResource("PlaneMesh_gcfv0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_p5yrp")
+
+[node name="Light" type="OmniLight3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66616, 0)
+layers = 3
+light_color = Color(1, 1, 0.32549, 1)
+
+[editable path="Model"]

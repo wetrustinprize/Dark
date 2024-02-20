@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtx6pk8ooj5xd"]
+
+[ext_resource type="PackedScene" uid="uid://b6ogjd7ri41h0" path="res://models/camera/camera.glb" id="1_njb6q"]
+[ext_resource type="Script" path="res://scripts/CameraLightSource.cs" id="1_uwla2"]
+[ext_resource type="AudioStream" uid="uid://o6k1br60rust" path="res://sounds/camera_shutter_and_flash.mp3" id="3_hsree"]
+
+[node name="CameraSource" type="Node3D" node_paths=PackedStringArray("_light", "_audio")]
+script = ExtResource("1_uwla2")
+_light = NodePath("Model/SpotLight3D")
+_audio = NodePath("ShutterSFX")
+
+[node name="Model" parent="." instance=ExtResource("1_njb6q")]
+
+[node name="Base" parent="Model" index="0"]
+layers = 2
+
+[node name="Lens" parent="Model" index="1"]
+layers = 2
+
+[node name="Flash" parent="Model" index="2"]
+layers = 2
+
+[node name="Cable Plug" parent="Model" index="3"]
+layers = 2
+
+[node name="Cable" parent="Model" index="4"]
+layers = 2
+
+[node name="Cable Plug Flash" parent="Model" index="5"]
+layers = 2
+
+[node name="Button Outer" parent="Model" index="6"]
+layers = 2
+
+[node name="Button" parent="Model" index="7"]
+layers = 2
+
+[node name="Bulb Lamp" parent="Model" index="8"]
+layers = 2
+
+[node name="Bulb Light" parent="Model" index="9"]
+layers = 2
+
+[node name="Bulb Socket" parent="Model" index="10"]
+layers = 2
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Model"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.288204, 0.801263, 1.25978e-08)
+spot_range = 7.45672
+spot_angle = 65.4817
+
+[node name="ShutterSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_hsree")
+
+[editable path="Model"]

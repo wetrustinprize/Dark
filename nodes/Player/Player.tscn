@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://mmis6hf7q7ww"]
+
+[ext_resource type="Script" path="res://scripts/PlayerController.cs" id="1_18vn2"]
+[ext_resource type="PackedScene" uid="uid://dl6i5b4t3e2qw" path="res://nodes/Player/LightSources/LighterSource.tscn" id="3_4fuju"]
+[ext_resource type="PackedScene" uid="uid://dtx6pk8ooj5xd" path="res://nodes/Player/LightSources/CameraSource.tscn" id="4_4wq3c"]
+[ext_resource type="Script" path="res://scripts/EquippedViewport.cs" id="8_54372"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pjey3"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_lightSource", "_camera", "_equippedCamera", "_equippedPivot")]
+script = ExtResource("1_18vn2")
+_lightSource = NodePath("FirstPersonCamera/Equipped/CameraSource")
+_camera = NodePath("FirstPersonCamera")
+_equippedCamera = NodePath("FirstPersonCamera/SubViewportContainer/SubViewport/EquippeCamera")
+_equippedPivot = NodePath("FirstPersonCamera/Equipped")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_pjey3")
+
+[node name="FirstPersonCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65156, 0)
+cull_mask = 1048573
+current = true
+fov = 60.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="FirstPersonCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.15156, 0)
+layers = 3
+light_energy = 0.05
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="FirstPersonCamera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="FirstPersonCamera/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+script = ExtResource("8_54372")
+
+[node name="EquippeCamera" type="Camera3D" parent="FirstPersonCamera/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65156, 0)
+cull_mask = 1047554
+fov = 60.0
+
+[node name="Equipped" type="Node3D" parent="FirstPersonCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25073e-08, -0.696766, -0.715)
+
+[node name="LighterSource" parent="FirstPersonCamera/Equipped" instance=ExtResource("3_4fuju")]
+transform = Transform3D(0.435263, 0, 0.900304, 0, 1, 0, -0.900304, 0, 0.435263, 0.547324, -0.115679, -0.328346)
+
+[node name="CameraSource" parent="FirstPersonCamera/Equipped" instance=ExtResource("4_4wq3c")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.552236, 0, -0.285109)
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
