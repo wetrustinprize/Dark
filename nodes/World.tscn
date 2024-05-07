@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7slmwsaceh8k"]
+[gd_scene load_steps=5 format=3 uid="uid://b7slmwsaceh8k"]
 
 [ext_resource type="PackedScene" uid="uid://mmis6hf7q7ww" path="res://nodes/Player/Player.tscn" id="1_8crmv"]
+[ext_resource type="ArrayMesh" uid="uid://j4y2olo28rn8" path="res://models/hospital/models/BedMatress.res" id="2_fnjr2"]
+[ext_resource type="ArrayMesh" uid="uid://d1mg45r1mwsl4" path="res://models/hospital/models/BedFrame.res" id="3_wnvf2"]
 
 [sub_resource type="Environment" id="Environment_3nqns"]
 background_mode = 1
@@ -28,3 +30,15 @@ size = Vector3(1, 0.104614, 0.544434)
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 1.77636e-15, -0.255371)
 size = Vector3(1, 1, 0.489258)
+
+[node name="BedMatress" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01161, 0.372605, -0.615506)
+mesh = ExtResource("2_fnjr2")
+
+[node name="BedFrame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.95861, -0.263483, -1.8685)
+mesh = ExtResource("3_wnvf2")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933903, 1.79046, -0.987053)
+layers = 3

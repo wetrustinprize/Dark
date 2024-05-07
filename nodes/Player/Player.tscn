@@ -33,7 +33,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="FirstPersonCamera/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(320, 240)
+size = Vector2i(480, 360)
 render_target_update_mode = 4
 script = ExtResource("8_54372")
 
