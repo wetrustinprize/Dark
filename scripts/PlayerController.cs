@@ -6,7 +6,7 @@ public partial class PlayerController : CharacterBody3D
 {
 	#region Variables
 
-	[Export] private PlayerLightSource _lightSource;
+	[Export] private CameraLightSource _cameraLightSource;
 
 	#region Rotation
 
@@ -36,8 +36,6 @@ public partial class PlayerController : CharacterBody3D
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
-
-		_lightSource.OnEquip();
 	}
 
 	public override void _Process(double delta)
@@ -58,7 +56,7 @@ public partial class PlayerController : CharacterBody3D
 			CalculateRotation(mouseInputEvent);
 
 		if (@event.IsActionPressed("use_equipped"))
-			_lightSource.OnTrigger();
+			_cameraLightSource.OnTrigger();
 	}
 
 	#region Rotation
@@ -89,9 +87,6 @@ public partial class PlayerController : CharacterBody3D
 			Mathf.Clamp(_equippedPivot.RotationDegrees.Y, -_equippedPivotClamp, _equippedPivotClamp),
 			0
 		);
-
-		// Send to the light source
-		_lightSource.OnRotate(lookRotationVector);
 	}
 
 	void SmoothReturnEquippedPivot(double delta)
@@ -129,7 +124,5 @@ public partial class PlayerController : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
-
-		_lightSource.OnMove(new Vector3(inputDir.X, 0, inputDir.Y));
 	}
 }

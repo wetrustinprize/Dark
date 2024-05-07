@@ -6,7 +6,7 @@
 
 [node name="CameraSource" type="Node3D" node_paths=PackedStringArray("_light", "_audio")]
 script = ExtResource("1_uwla2")
-_light = NodePath("Model/SpotLight3D")
+_light = NodePath("SpotLight3D")
 _audio = NodePath("ShutterSFX")
 
 [node name="Model" parent="." instance=ExtResource("1_njb6q")]
@@ -44,12 +44,13 @@ layers = 2
 [node name="Bulb Socket" parent="Model" index="10"]
 layers = 2
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Model"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.288204, 0.801263, 1.25978e-08)
-spot_range = 7.45672
-spot_angle = 65.4817
-
 [node name="ShutterSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hsree")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.288204, 0.801263, 1.25978e-08)
+light_energy = 0.0
+spot_range = 7.45672
+spot_angle = 65.4817
 
 [editable path="Model"]

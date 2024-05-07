@@ -3,7 +3,7 @@ using System;
 
 namespace Dark.Player;
 
-public partial class CameraLightSource : PlayerLightSource
+public partial class CameraLightSource : Node3D
 {
 	#region Variables
 
@@ -17,13 +17,7 @@ public partial class CameraLightSource : PlayerLightSource
 
 	#endregion
 
-	#region PlayerLightSource
-
-	public override void OnEquip()
-	{
-	}
-
-	public override void OnTrigger()
+	public void OnTrigger()
 	{
 		_lightTween?.Stop();
 
@@ -34,13 +28,4 @@ public partial class CameraLightSource : PlayerLightSource
 		_lightTween = GetTree().CreateTween();
 		_lightTween.TweenProperty(_light, "light_energy", 0, _lightDim);
 	}
-
-	public override void OnUnequip()
-	{
-		_lightTween?.Stop();
-
-		_light.LightEnergy = 0;
-	}
-
-	#endregion
 }
